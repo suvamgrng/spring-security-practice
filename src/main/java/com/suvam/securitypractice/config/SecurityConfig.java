@@ -16,23 +16,22 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
 
-                        // ✅ Public pages - no login needed
                         .requestMatchers(
-                                "/students/**",   // your students API
-                                "/login",         // 👈 ADD THIS! Login page itself
-                                "/logout"         // 👈 ADD THIS! Logout endpoint
+                                "/students/**",
+                                "/login",
+                                "/logout",
+                                "/greet"
                         ).permitAll()
 
-                        // 🔐 Everything else needs login
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")       // Your custom login page URL
-                        .defaultSuccessUrl("/students", true) // 👈 Where to go after login
+
+                        .defaultSuccessUrl("/students", true)
                         .permitAll()
                 )
                 .logout(log -> log
-                        .logoutSuccessUrl("/login?logout")  // 👈 Where to go after logout
+                        .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 );
 
